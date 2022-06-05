@@ -1,0 +1,34 @@
+/* Module Build File */
+
+description     = "Fauld Detection module"
+ext {
+}
+niagaraModule {
+  moduleName = "fddModule"
+  preferredSymbol = "SM"
+  runtimeProfile = "ux"
+}
+
+dependencies {
+  compile "Tridium:nre:4.9"
+  compile "Tridium:baja:4.9"
+  compile "Tridium:history-rt:4.9"
+  compile "Tridium:bql-rt:4.9"
+  compile "Tridium:control-rt:4.9"
+  compile "Tridium:web-rt:4.9"
+  compile "Tridium:gx-rt:4.9"
+  compile "Tridium:webEditors-ux:4.9"
+
+}
+jar {
+  from('src') {
+    include 'rc/'
+    include 'rc/**/*.js'
+    exclude 'rc/**/*.built.js'
+    include 'rc/**/*.css'
+    include 'rc/**/*.htm'
+    include 'rc/**/*.hbs'
+    include 'rc/**/*.*'
+    include 'rc/*.*'
+  }
+}

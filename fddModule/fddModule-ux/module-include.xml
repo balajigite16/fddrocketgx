@@ -1,0 +1,10 @@
+<!-- Module Include File -->
+<!-- Types -->
+<types>
+  <!-- Type Example:<type name="MyClass" class="com.acme.BMyClass"/> -->
+  <!--com.abc.fddModule.ux-->
+  <!--com.rocketGX.fddModule.ux-->
+  <type class="com.rocketGX.fddModule.ux.BFDDWidget" name="FDDWidget"/>
+  <type class="com.rocketGX.fddModule.ux.BFDDService" name="FDDService"/>
+  <type class="com.rocketGX.fddModule.ux.BAssetComponent" name="AssetComponent"/>
+</types>

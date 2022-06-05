@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module name="fddModule-ux" bajaVersion="0" vendor="brg" vendorVersion="1.0" description="Fauld Detection module" preferredSymbol="SM" nre="true" autoload="true" installable="true" buildMillis="1652594186672" buildHost="DESKTOP-NRBO933" moduleName="fddModule" runtimeProfile="ux">
+ <dependencies>
+  <dependency name="baja" vendor="Tridium" vendorVersion="4.9"/>
+  <dependency name="control-rt" vendor="Tridium" vendorVersion="4.9"/>
+  <dependency name="webEditors-ux" vendor="Tridium" vendorVersion="4.9"/>
+  <dependency name="gx-rt" vendor="Tridium" vendorVersion="4.9"/>
+  <dependency name="history-rt" vendor="Tridium" vendorVersion="4.9"/>
+  <dependency name="web-rt" vendor="Tridium" vendorVersion="4.9"/>
+  <dependency name="bql-rt" vendor="Tridium" vendorVersion="4.9"/>
+ </dependencies>
+ <dirs/>
+ <types>
+  <type class="com.rocketGX.fddModule.ux.BFDDWidget" name="FDDWidget"/>
+  <type class="com.rocketGX.fddModule.ux.BFDDService" name="FDDService"/>
+  <type class="com.rocketGX.fddModule.ux.BAssetComponent" name="AssetComponent"/>
+ </types>
+ <permissions>
+  <niagara-permission-groups type="all"/>
+  <niagara-permission-groups type="workbench"/>
+  <niagara-permission-groups type="station"/>
+ </permissions>
+</module>

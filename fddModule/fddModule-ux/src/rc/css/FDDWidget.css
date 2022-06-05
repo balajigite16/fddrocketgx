@@ -1,0 +1,20 @@
+div.container {
+  width: 80%;
+}
+
+div.dataTables_wrapper {
+    minWidth: 850px;
+    margin: 0 auto;
+}
+
+/*table.dataTable thead tr {
+  background-color: green;
+}
+
+table.dataTable tbody tr {
+    background-color: transparent;
+}*/
+
+.ux-root > .bajaux-widget-container > .bajaux-widget {
+  overflow: hidden !important;
+}

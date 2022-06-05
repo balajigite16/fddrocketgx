@@ -1,0 +1,9 @@
+/*
+ * Copyright 2021 bsa, All Rights Reserved.
+ */
+/* Vendor Configuration File */
+group = 'brg'
+
+def moduleVersion = '1.0'
+def moduleVersionPatch = [:]
+version = "${moduleVersion}${moduleVersionPatch.get(project.name, '')}"

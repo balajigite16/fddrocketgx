@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bajaObjectGraph version="4.0" reversibleEncodingKeySource="none" reversibleEncodingValidator="[null.1]=" >
+<p m="b=baja" t="b:Folder">
+  <p n="FDDService" m="SM=fddModule" t="SM:FDDService"/>
+  <p n="AssetComponent" m="SM=fddModule" t="SM:AssetComponent"/>
+  <p n="FDDWidget" m="wb=workbench" t="wb:WebWidget">
+    <p n="layout" m="ui=bajaui" t="ui:Layout" v="0.0,0.0,800.0,500.0"/>
+    <p n="js" t="b:Ord" v="view:fddModule:FDDWidget"/>
+    <p n="wbViewBinding" t="wb:WbViewBinding"></p>
+    <p n="formFactor" f="rh3" m="w=web" t="w:FormFactorEnum" v="compact"/>
+  </p>
+</p>
+</bajaObjectGraph>

@@ -1,0 +1,11 @@
+/*
+ * Copyright 2021 bsa, All Rights Reserved.
+ */
+/* Environment Configuration File */
+
+// Change niagara_home and niagara_user_home as needed to point to the
+// correct path to your desired Niagara install and its associated
+// user home
+gradle.ext.niagara_dev_home = "C:/DRive/NiagaraProjects/projects/rocketgx/n4_fddmodule/fddModule"
+gradle.ext.niagara_home = "C:/TrendControlSystems/IQVISION2.50"
+gradle.ext.niagara_user_home = "C:/Users/balaji/Niagara4.9/vykon"
