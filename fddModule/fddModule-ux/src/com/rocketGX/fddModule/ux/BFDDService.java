@@ -1,6 +1,7 @@
 package com.rocketGX.fddModule.ux;
 
 import com.tridium.bql.util.BDynamicTimeRange;
+import com.tridium.history.db.BLocalDbHistory;
 import com.tridium.json.JSONArray;
 
 import javax.baja.collection.BITable;
@@ -187,53 +188,66 @@ public class BFDDService extends BAbstractService {
             HistorySpaceConnection conn = historyDatabase.getConnection(null);
             BHistoryId historyId = getHistoryId(historyDatabase, historyName);
             BIHistory runNumerHistory = conn.getHistory(historyId);
+            BAbsTime lastTimestamp = conn.getLastTimestamp(runNumerHistory);
             BITable<BHistoryRecord> collection = conn.timeQuery(runNumerHistory, getStartDate(), getEndDate());
             if (collection != null) {
                 List<String> areas = new ArrayList<>();
                 int count = -1;
+                boolean addLastRec = true;
                 BAbsTime start = null;
+                BAbsTime startChanged = null;
                 BAbsTime end;
+                JSONArray obj = null;
                 try (Cursor <BHistoryRecord> cursor = collection.cursor()) {
                     while (cursor.next()) {
                         BHistoryRecord rec = cursor.get();
+
+                        if(status && addLastRec){
+                            JSONArray objLst = new JSONArray();
+                            objLst.put(assetName);
+                            objLst.put(faultName);
+                            objLst.put("Active");
+                            objLst.put( lastTimestamp);
+                            objLst.put( "-");
+                            objLst.put( "-");
+                            objLst.put( "-");
+                            objLst.put( "-");
+                            objLst.put( "-");
+                            dtArray.put(objLst);
+                            addLastRec = false;
+                        }
                         if (rec instanceof BHistoryRecord) {
                             //System.out.println("Inside history records");
                             BTrendFlags flags = ((BBooleanTrendRecord)rec).getTrendFlags();
                             boolean value = ((BBooleanTrendRecord) rec).getValue();
-                            if(!flags.toString().contains("start")){
+
+                            if(count == -1 && value){
+                                start = rec.getTimestamp();
                                 count ++;
-                                if(count == 0){
-                                    start = rec.getTimestamp();
-                                }else if(count == 1){
-                                    end = rec.getTimestamp();
-                                    BRelTime duration = start.delta(end);
-                                    int hrs = duration.getHours();
-                                    int mins = duration.getMinutes();
-                                    int sec  = duration.getSeconds();
-                                    String dur = duration.toString().replace("hours", "h")
-                                            .replace("minutes", "m").replace("seconds", "s");
-                                    /*if(hrs != 0){
-                                        dur = dur + hrs + " h ";
+                            }else if(!value && start !=null){
+                                end = rec.getTimestamp();
+                                BRelTime duration = start.delta(end);
+
+                                if(end != lastTimestamp && startChanged !=null){
+                                    if(startChanged == start){
+                                        dtArray.remove(dtArray.length()-1);
                                     }
-                                    if(mins != 0){
-                                        dur = dur + mins + " m ";
-                                    }
-                                    if(sec != 0){
-                                        dur = dur + sec + " s ";
-                                    }*/
-                                    JSONArray obj = new JSONArray();
-                                    obj.put(assetName);
-                                    obj.put(faultName);
-                                    obj.put(status);
-                                    obj.put( start.toLocalTime().toString());
-                                    obj.put( end.toLocalTime().toString());
-                                    obj.put( dur);
-                                    obj.put( "-");
-                                    obj.put( "-");
-                                    obj.put( "-");
-                                    dtArray.put(obj);
-                                    count = -1;
                                 }
+                                String dur = duration.toString().replace(" days", "d").replace(" hours", "h")
+                                        .replace(" minutes", "m").replace(" minute", "m").replace(" seconds", "s");
+                                obj = new JSONArray();
+                                obj.put(assetName);
+                                obj.put(faultName);
+                                obj.put("InActive");
+                                obj.put( start.toLocalTime().toString());
+                                obj.put( end.toLocalTime().toString());
+                                obj.put( dur);
+                                obj.put( "-");
+                                obj.put( "-");
+                                obj.put( "-");
+                                dtArray.put(obj);
+                                startChanged = start;
+                                count = -1;
                             }
                         }
                     }
