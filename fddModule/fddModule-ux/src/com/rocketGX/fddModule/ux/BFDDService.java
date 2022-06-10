@@ -17,10 +17,11 @@ import javax.baja.sys.*;
 import javax.baja.util.BFolder;
 import javax.baja.util.Lexicon;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @NiagaraType
-@NiagaraProperty(name = "stationFddOrd", type = "BOrd", defaultValue = "BOrd.NULL", flags = Flags.SUMMARY)
+//@NiagaraProperty(name = "stationFddOrd", type = "BOrd", defaultValue = "BOrd.NULL", flags = Flags.SUMMARY)
 @NiagaraProperty(
         name = "TimeRange",
         type = "BDynamicTimeRange",
@@ -30,32 +31,10 @@ import java.util.List;
 @NiagaraProperty(name = "endDate", type = "BAbsTime", defaultValue = "BAbsTime.DEFAULT", flags = Flags.READONLY)
 @NiagaraAction(name="getFddData", returnType = "BValue",flags = Flags.OPERATOR)
 public class BFDDService extends BAbstractService {
-/*+ ------------ BEGIN BAJA AUTO GENERATED CODE ------------ +*/
-/*@ $com.rocketGX.fddModule.ux.BFDDService(1938931094)1.0$ @*/
-/* Generated Sun May 15 13:48:33 AWST 2022 by Slot-o-Matic (c) Tridium, Inc. 2012 */
 
-////////////////////////////////////////////////////////////////
-// Property "stationFddOrd"
-////////////////////////////////////////////////////////////////
-  
-  /**
-   * Slot for the {@code stationFddOrd} property.
-   * @see #getStationFddOrd
-   * @see #setStationFddOrd
-   */
-  public static final Property stationFddOrd = newProperty(Flags.SUMMARY, BOrd.NULL, null);
-  
-  /**
-   * Get the {@code stationFddOrd} property.
-   * @see #stationFddOrd
-   */
-  public BOrd getStationFddOrd() { return (BOrd)get(stationFddOrd); }
-  
-  /**
-   * Set the {@code stationFddOrd} property.
-   * @see #stationFddOrd
-   */
-  public void setStationFddOrd(BOrd v) { set(stationFddOrd, v, null); }
+/*+ ------------ BEGIN BAJA AUTO GENERATED CODE ------------ +*/
+/*@ $com.rocketGX.fddModule.ux.BFDDService(3802099208)1.0$ @*/
+/* Generated Fri Jun 10 20:30:22 AEST 2022 by Slot-o-Matic (c) Tridium, Inc. 2012 */
 
 ////////////////////////////////////////////////////////////////
 // Property "TimeRange"
@@ -280,9 +259,34 @@ public class BFDDService extends BAbstractService {
 
     private void addFDDData(JSONArray dtArray) {
 
-        BFolder alarms = (BFolder) getStationFddOrd().resolve().get();
+       // BFolder alarms = (BFolder) getStationFddOrd().resolve().get();
 
-        BFolder AHU_OffHoursOperation = (BFolder) alarms.get("AHU_OffHoursOperation");
+        Property[] properties = this.getDynamicPropertiesArray();
+
+        for (Property prop : properties)
+        {
+            if(this.get(prop) instanceof BAssetComponent){
+                BAssetComponent comp = (BAssetComponent) this.get(prop);
+                double cost = comp.getEnergyCost();
+                double co2 = comp.getCo2Factor();
+                Property[] ordProperties = comp.getDynamicPropertiesArray();
+                for(Property ordProp: ordProperties){
+                    if(comp.get(ordProp) instanceof BOrd){
+                        BOrd ord = (BOrd) comp.get(ordProp);
+                        if(!ord.isNull()){
+                            BBooleanWritable fddPoint = (BBooleanWritable) ord.resolve().get();
+                            fddPoint.loadSlots();
+                            fddPoint.lease();
+                            getHistoryData(fddPoint.getName(), dtArray,
+                                    comp.getName(), SlotPath.unescape(ordProp.getName()), fddPoint.getOut().getValue());
+
+                        }
+                    }
+                }
+            }
+        }
+
+/*        BFolder AHU_OffHoursOperation = (BFolder) alarms.get("AHU_OffHoursOperation");
         BBooleanWritable ahu_offHrs = (BBooleanWritable) AHU_OffHoursOperation.get("Bool1_OffHoursOperation_Fault");
         getHistoryData("Bool1_OffHoursOperation_Fault", dtArray,
                 "AHU", "Off Hours Operation", ahu_offHrs.getOut().getValue());
@@ -305,7 +309,7 @@ public class BFDDService extends BAbstractService {
         BFolder Chiller_PlantInHand = (BFolder) alarms.get("Chiller_PlantInHand");
         BBooleanWritable chiller_status = (BBooleanWritable) Chiller_PlantInHand.get("Bool1_PlantInHand_Fault");
         getHistoryData("Bool1_PlantInHand_Fault", dtArray,
-                "Chiller", "Plant in Hand", chiller_status.getOut().getValue());
+                "Chiller", "Plant in Hand", chiller_status.getOut().getValue());*/
     }
 
 
