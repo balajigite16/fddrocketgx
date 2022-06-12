@@ -30,11 +30,13 @@ import java.util.List;
 @NiagaraProperty(name = "startDate", type = "BAbsTime", defaultValue = "BAbsTime.DEFAULT", flags = Flags.READONLY)
 @NiagaraProperty(name = "endDate", type = "BAbsTime", defaultValue = "BAbsTime.DEFAULT", flags = Flags.READONLY)
 @NiagaraAction(name="getFddData", returnType = "BValue",flags = Flags.OPERATOR)
+@NiagaraAction(name="addAsset", parameterType = "BString",defaultValue = "BString.DEFAULT",flags = Flags.OPERATOR)
 public class BFDDService extends BAbstractService {
 
+
 /*+ ------------ BEGIN BAJA AUTO GENERATED CODE ------------ +*/
-/*@ $com.rocketGX.fddModule.ux.BFDDService(3802099208)1.0$ @*/
-/* Generated Fri Jun 10 20:30:22 AEST 2022 by Slot-o-Matic (c) Tridium, Inc. 2012 */
+/*@ $com.rocketGX.fddModule.ux.BFDDService(560574665)1.0$ @*/
+/* Generated Sun Jun 12 17:31:27 AEST 2022 by Slot-o-Matic (c) Tridium, Inc. 2012 */
 
 ////////////////////////////////////////////////////////////////
 // Property "TimeRange"
@@ -122,6 +124,22 @@ public class BFDDService extends BAbstractService {
   public BValue getFddData() { return (BValue)invoke(getFddData, null, null); }
 
 ////////////////////////////////////////////////////////////////
+// Action "addAsset"
+////////////////////////////////////////////////////////////////
+  
+  /**
+   * Slot for the {@code addAsset} action.
+   * @see #addAsset(BString parameter)
+   */
+  public static final Action addAsset = newAction(Flags.OPERATOR, BString.DEFAULT, null);
+  
+  /**
+   * Invoke the {@code addAsset} action.
+   * @see #addAsset
+   */
+  public void addAsset(BString parameter) { invoke(addAsset, parameter, null); }
+
+////////////////////////////////////////////////////////////////
 // Type
 ////////////////////////////////////////////////////////////////
   
@@ -143,6 +161,12 @@ public class BFDDService extends BAbstractService {
 
     public Type[] getServiceTypes() {
         return this.serviceTypes;
+    }
+
+    public void doAddAsset(BString assetName) {
+        try {
+            this.add(SlotPath.escape(assetName.toString()), new BAssetComponent());
+        }catch (Exception ex){}
     }
 
     public BValue doGetFddData(){
