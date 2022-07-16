@@ -1,6 +1,8 @@
 require.config({
     paths: {
         "datatables.net": "/module/fddModule/rc/scripts/jquery.dataTables.min",
+        "datatables.net-bs4": "/module/fddModule/rc/scripts/dataTables.bootstrap4.min",
+        "datatables.net-buttons": "/module/fddModule/rc/scripts/dataTables.buttons.min",
     }
 });
 
@@ -14,12 +16,20 @@ define(['baja!',
         'hbs!nmodule/fddModule/rc/template/FddTemplate',
         'nmodule/fddModule/rc/scripts/jquery-3.5.1',
         'datatables.net',
-        'nmodule/fddModule/rc/scripts/dataTables.bootstrap4.min',
+        'datatables.net-bs4',
+        'datatables.net-buttons',
+        'nmodule/fddModule/rc/scripts/buttons.bootstrap4.min',
+        'nmodule/fddModule/rc/scripts/buttons.colVis.min',
+        'nmodule/fddModule/rc/scripts/buttons.html5.min',
+        'nmodule/fddModule/rc/scripts/jszip.min',
+        'nmodule/fddModule/rc/scripts/pdfmake.min',
+        'nmodule/fddModule/rc/scripts/vfs_fonts',
         'nmodule/fddModule/rc/scripts/bootstrap.bundle.min',
         'css!nmodule/fddModule/rc/css/FDDWidget',
         'css!nmodule/fddModule/rc/css/bootstrap',
         'css!nmodule/fddModule/rc/css/bootstrap.min',
         'css!nmodule/fddModule/rc/css/dataTables.bootstrap4.min',
+        'css!nmodule/fddModule/rc/css/buttons.bootstrap4.min',
         ],function(
          baja,
          subscriberMixIn,
@@ -135,12 +145,14 @@ define(['baja!',
        function render(jsonObj, dom) {
 
              dom.html(template({}));
-             $('#example').DataTable({
+             var table = $('#example').DataTable({
+                lengthChange: false,
                 paging: false,
                 scrollCollapse: false,
                 autoWidth: false,
                 scrollX: true,
                 data: jsonObj,
+                buttons: [ 'csv', 'copy', 'colvis' ],
                 columns: [
                         { title: "Asset Name" },
                         { title: "Fault Name" },
@@ -154,6 +166,7 @@ define(['baja!',
                 ]
                 //responsive: true
              });
+              table.buttons().container().appendTo( '#example_wrapper .col-md-6:eq(0)' );
        }
 
         FDDWidget.prototype.doLoad = function(comp){
