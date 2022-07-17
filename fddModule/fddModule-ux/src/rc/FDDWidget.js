@@ -154,16 +154,22 @@ define(['baja!',
                 data: jsonObj,
                 buttons: [ 'csv', 'copy', 'colvis' ],
                 columns: [
-                        { title: "Asset Name" },
-                        { title: "Fault Name" },
-                        { title: "Is Active" },
-                        { title: "Act Time" },
-                        { title: "De-Act Time" },
-                        { title: "Duration" },
-                        { title: "Cost Annualised" },
-                        { title: "Kwh" },
-                        { title: "Co2" }
-                ]
+                        { title: "STATUS" },
+                        { title: "ASSET" },
+                        { title: "FAULT" },
+                        { title: "ACTIVATION" },
+                        { title: "DEACTIVATION" },
+                        { title: "DURATION" },
+                        { title: "COST ANNUALISED" },
+                        { title: "ENERGY" },
+                        { title: "CO2 EMISSION" }
+                ],
+                "createdRow": function(row, data, dataIndex) {
+                    if (data["0"] == true) {
+                      $(row).css("background-color", "Orange");
+                      $(row).addClass("warning");
+                    }
+                  },
                 //responsive: true
              });
               table.buttons().container().appendTo( '#example_wrapper .col-md-6:eq(0)' );

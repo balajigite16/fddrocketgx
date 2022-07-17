@@ -1,7 +1,6 @@
 package com.rocketGX.fddModule.ux;
 
 import com.tridium.bql.util.BDynamicTimeRange;
-import com.tridium.history.db.BLocalDbHistory;
 import com.tridium.json.JSONArray;
 
 import javax.baja.collection.BITable;
@@ -14,11 +13,10 @@ import javax.baja.nre.annotations.NiagaraAction;
 import javax.baja.nre.annotations.NiagaraProperty;
 import javax.baja.nre.annotations.NiagaraType;
 import javax.baja.sys.*;
-import javax.baja.util.BFolder;
 import javax.baja.util.Lexicon;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @NiagaraType
 //@NiagaraProperty(name = "stationFddOrd", type = "BOrd", defaultValue = "BOrd.NULL", flags = Flags.SUMMARY)
@@ -183,7 +181,7 @@ public class BFDDService extends BAbstractService {
         return result;
     }
 
-    public void getHistoryData(String historyName, JSONArray dtArray, String assetName, String faultName, boolean status){
+    public void getHistoryData(String historyName, JSONArray dtArray, String assetName, String faultName, boolean status, double energy, double co2){
         try {
             setStartDate(getTimeRange().getStartTime(BAbsTime.now()));
             setEndDate(getTimeRange().getEndTime(BAbsTime.now()));
@@ -199,17 +197,58 @@ public class BFDDService extends BAbstractService {
                 boolean addLastRec = true;
                 BAbsTime start = null;
                 BAbsTime startChanged = null;
-                BAbsTime end;
+                BAbsTime end = null;
                 JSONArray obj = null;
+                int h = 0;
+                int m = 0;
+                int s = 0;
                 try (Cursor <BHistoryRecord> cursor = collection.cursor()) {
                     while (cursor.next()) {
                         BHistoryRecord rec = cursor.get();
+                        if(rec instanceof  BHistoryRecord){
+                            BTrendFlags flags = ((BBooleanTrendRecord)rec).getTrendFlags();
+                            boolean value = ((BBooleanTrendRecord) rec).getValue();
+                            if(value && count == -1){
+                                start = rec.getTimestamp();
+                                end = null;
+                                count = 0;
+                            }
 
-                        if(status && addLastRec){
+                            if(!value && count == 0){
+                                end = rec.getTimestamp();
+                                count = -1;
+                            }
+
+                            if(start !=null && end !=null){
+                                BRelTime duration = start.delta(end);
+                                String hrsMinSec = getTimeHMS(duration.getMillis());
+                                int hrs = Integer.parseInt(getTimeHMS(duration.getMillis()).split(":")[0]);
+                                int min = Integer.parseInt(getTimeHMS(duration.getMillis()).split(":")[1]);
+                                int sec = Integer.parseInt(getTimeHMS(duration.getMillis()).split(":")[2]);
+
+                                h = h + hrs;
+                                if((m+min)>=60){
+                                    h = h + 1;
+                                    m = (m+min) - 60;
+                                }else {
+                                    m = m+min;
+                                }
+
+                                if((s+sec) >= 60){
+                                    m = m + 1 ;
+                                    s = (s+sec)-60;
+                                }else {
+                                    s = s + sec;
+                                }
+
+                            }
+                        }
+
+                      /*  if(status && addLastRec){
                             JSONArray objLst = new JSONArray();
+                            objLst.put("Running");
                             objLst.put(assetName);
                             objLst.put(faultName);
-                            objLst.put("Active");
                             objLst.put( lastTimestamp);
                             objLst.put( "-");
                             objLst.put( "-");
@@ -239,9 +278,9 @@ public class BFDDService extends BAbstractService {
                                 String dur = duration.toString().replace(" days", "d").replace(" hours", "h")
                                         .replace(" minutes", "m").replace(" minute", "m").replace(" seconds", "s");
                                 obj = new JSONArray();
+                                obj.put("Stopped");
                                 obj.put(assetName);
                                 obj.put(faultName);
-                                obj.put("InActive");
                                 obj.put( start.toLocalTime().toString());
                                 obj.put( end.toLocalTime().toString());
                                 obj.put( dur);
@@ -252,14 +291,37 @@ public class BFDDService extends BAbstractService {
                                 startChanged = start;
                                 count = -1;
                             }
-                        }
+                        }*/
                     }
+
+                    String duration = h + ":" + m + ":" + s;
+                    obj = new JSONArray();
+                    obj.put(status);
+                    obj.put(assetName);
+                    obj.put(faultName);
+                    obj.put( start.toLocalTime().toString());
+                    obj.put( end == null? "-" : end.toLocalTime().toString());
+                    obj.put( duration);
+                    obj.put( "-");
+                    obj.put( energy + " KWh");
+                    obj.put( co2 + " kgCO2");
+                    dtArray.put(obj);
                 }
             }
         }catch (Exception ex){
 
         }
     }
+
+    private String getTimeHMS(long millis) {
+        return String.format("%02d:%02d:%02d",
+                TimeUnit.MILLISECONDS.toHours(millis),
+                TimeUnit.MILLISECONDS.toMinutes(millis) -
+                        TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
+                TimeUnit.MILLISECONDS.toSeconds(millis) -
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
+    }
+
 
     private BHistoryId getHistoryId(BHistoryDatabase historyDatabase, String historyName) {
         BHistoryId historyId = BHistoryId.make(historyDatabase.getDeviceName(),
@@ -291,7 +353,7 @@ public class BFDDService extends BAbstractService {
         {
             if(this.get(prop) instanceof BAssetComponent){
                 BAssetComponent comp = (BAssetComponent) this.get(prop);
-                double cost = comp.getEnergyCost();
+                double energy = comp.getEnergyCost();
                 double co2 = comp.getCo2Factor();
                 Property[] ordProperties = comp.getDynamicPropertiesArray();
                 for(Property ordProp: ordProperties){
@@ -302,7 +364,7 @@ public class BFDDService extends BAbstractService {
                             fddPoint.loadSlots();
                             fddPoint.lease();
                             getHistoryData(fddPoint.getName(), dtArray,
-                                    comp.getName(), SlotPath.unescape(ordProp.getName()), fddPoint.getOut().getValue());
+                                    comp.getName(), SlotPath.unescape(ordProp.getName()), fddPoint.getOut().getValue(), energy, co2);
 
                         }
                     }

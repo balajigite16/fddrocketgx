@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module name="fddModule-ux" bajaVersion="0" vendor="brg" vendorVersion="1.0" description="Fauld Detection module" preferredSymbol="SM" nre="true" autoload="true" installable="true" buildMillis="1657970185296" buildHost="GEG-HO-LT126" moduleName="fddModule" runtimeProfile="ux">
+<module name="fddModule-ux" bajaVersion="0" vendor="brg" vendorVersion="1.0" description="Fauld Detection module" preferredSymbol="SM" nre="true" autoload="true" installable="true" buildMillis="1658072169744" buildHost="GEG-HO-LT126" moduleName="fddModule" runtimeProfile="ux">
  <dependencies>
   <dependency name="baja" vendor="Tridium" vendorVersion="4.9"/>
   <dependency name="control-rt" vendor="Tridium" vendorVersion="4.9"/>
