@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="b" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" width="25" height="25" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 25 25">
+  <defs>
+    <linearGradient id="e" x1="12.5" y1="25" x2="12.5" y2="0" gradientTransform="matrix(1, 0, 0, 1, 0, 0)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#575d6e"/>
+      <stop offset="1" stop-color="#a4acbd"/>
+    </linearGradient>
+    <linearGradient id="f" x1="12.49979" y1="23.99979" x2="12.49979" y2=".99979" gradientTransform="matrix(1, 0, 0, 1, 0, 0)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#4f5766"/>
+      <stop offset="1" stop-color="#788096"/>
+    </linearGradient>
+  </defs>
+  <g id="c" data-name="Layer 1">
+    <g>
+      <g id="d" data-name="outer_cricle">
+        <circle cx="12.5" cy="12.5" r="12.5" fill="url(#e)"/>
+      </g>
+      <circle cx="12.49979" cy="12.49979" r="11.5" fill="url(#f)"/>
+      <g>
+        <polygon points="18.58452 8.18482 8.1845 18.58479 6.41505 16.81221 16.82451 6.4148 18.58452 8.18482" fill="#e8eefa"/>
+        <polygon points="16.81476 18.58453 6.41479 8.1845 8.18738 6.41506 18.58478 16.82452 16.81476 18.58453" fill="#e8eefa"/>
+      </g>
+    </g>
+  </g>
+</svg>

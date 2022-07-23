@@ -7,14 +7,118 @@ div.dataTables_wrapper {
     margin: 0 auto;
 }
 
-/*table.dataTable thead tr {
-  background-color: green;
+.faultsubtext{
+  display: block;
+  font-size: 12px;
+  line-height: 1.2;
+  color:rgb(167, 167, 167);
+  opacity:1;
+  text-transform: none!important;
+}
+
+ .warning .faultsubtext {
+  color:#ff8fa7;
+}
+
+table.dataTable thead tr {
+  background: rgb(137,145,171);
+  background: linear-gradient(0deg, rgba(137,145,171,1) 0%, rgba(119,131,153,1) 100%) !important;
+  color:white;
+  text-transform: uppercase;  
+}
+
+table.table th{
+    font-weight: bold;
+    background: linear-gradient(0deg, rgba(137,145,171,1) 0%, rgba(119,131,153,1) 100%) !important;
+    border-bottom: 1px solid black;
+    padding: 3px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+table.table tr td {
+     background: transparent;
+}
+
+table.table td{
+    background: transparent;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    padding: 3px 8px 3px 3px;
+    white-space: nowrap;
 }
 
 table.dataTable tbody tr {
-    background-color: transparent;
-}*/
+    background-color: #333942;
+    color: white;
+    text-transform: uppercase;
+    font-weight: 500;
+}
 
+table.table tr.even td {
+    background: transparent;
+}
 .ux-root > .bajaux-widget-container > .bajaux-widget {
   overflow: hidden !important;
 }
+
+.page-item.active .page-link {background-color: #333942;}
+
+.warning {background: rgb(94,30,52);
+  background: linear-gradient(0deg, rgba(94,30,52,1) 0%, rgba(84,15,50,1) 100%);}
+
+  .iconcell{text-align: center !important;
+  }
+
+  td {
+    vertical-align: middle!important;
+    line-height:1.2
+  }
+
+
+  .iconcellsvg {
+    height:35px;
+    width:auto;
+    background-image: url("img/Alarm.svg");
+  }
+
+  .dataTables_info{
+    font-weight:500;
+    text-transform: uppercase;
+    color: #333942;
+  }
+
+  .dataTables_length label{
+    font-weight:500 !important;
+    text-transform: uppercase;
+    color: #333942;
+  }
+  
+  #example_filter label{
+    font-weight:500 !important;
+    text-transform: uppercase;
+    color: #333942;
+  }
+
+  .paginate_button{
+    font-weight:500 !important;
+    text-transform: uppercase;
+    color: #333942;
+
+  }
+
+  .page-link{
+    color:#333942
+  }
+
+  .page-item.active .page-link {
+    border-color: black;
+  }
+
+  .page-link:hover {
+    color:#333942
+  }
+
+  .btn:focus {
+    outline: none !important;
+  }

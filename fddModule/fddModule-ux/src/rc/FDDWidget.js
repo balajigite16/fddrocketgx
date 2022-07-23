@@ -147,7 +147,7 @@ define(['baja!',
              dom.html(template({}));
              var table = $('#example').DataTable({
                 lengthChange: false,
-                paging: false,
+                paging: true,
                 scrollCollapse: false,
                 autoWidth: false,
                 scrollX: true,
@@ -166,8 +166,10 @@ define(['baja!',
                 ],
                 "createdRow": function(row, data, dataIndex) {
                     if (data["0"] == true) {
-                      $(row).css("background-color", "Orange");
+                      $(row)[0].firstChild.innerHTML = "<img class=”iconcellsvg” src='/module/fddModule/rc/img/Alarm.svg'/>"
                       $(row).addClass("warning");
+                    }else{
+                       $(row)[0].firstChild.innerHTML = "<img class=”iconcellsvg” src='/module/fddModule/rc/img/Off.svg'/>"
                     }
                   },
                 //responsive: true

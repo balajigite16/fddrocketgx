@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="b" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" width="33" height="33" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 33 33">
+  <defs>
+    <linearGradient id="d" x1="16.5" y1="33" x2="16.5" y2="0" gradientTransform="matrix(1, 0, 0, 1, 0, 0)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#cb1a70"/>
+      <stop offset="1" stop-color="#ff6066"/>
+    </linearGradient>
+    <linearGradient id="f" x1="16.50026" y1="29.00021" x2="16.50026" y2="4.00021" gradientTransform="matrix(1, 0, 0, 1, 0, 0)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#cb1a70"/>
+      <stop offset="1" stop-color="#ffb4bf"/>
+    </linearGradient>
+    <linearGradient id="g" x1="16.50005" y1="28" x2="16.50005" y2="5" xlink:href="#d"/>
+  </defs>
+  <g id="c" data-name="Layer 1">
+    <g>
+      <g opacity=".5">
+        <circle cx="16.5" cy="16.5" r="16.5" fill="url(#d)"/>
+      </g>
+      <g id="e" data-name="outer_cricle">
+        <circle cx="16.50026" cy="16.50021" r="12.5" fill="url(#f)"/>
+      </g>
+      <circle cx="16.50005" cy="16.5" r="11.5" fill="url(#g)"/>
+      <path id="h" data-name="exclamation_mark" d="M14.75043,22.38869c0-1.04249,.74688-1.75202,1.75022-1.75202s1.74978,.70954,1.74978,1.75202c0,1.04204-.74643,1.78217-1.74978,1.78217s-1.75022-.74013-1.75022-1.78217Zm0-13.5594h3.5l-.6816,9.05158h-2.13623l-.68217-9.05158Z" fill="#fff"/>
+    </g>
+  </g>
+</svg>

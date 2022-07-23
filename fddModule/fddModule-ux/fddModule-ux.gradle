@@ -24,6 +24,9 @@ jar {
   from('src') {
     include 'rc/'
     include 'rc/**/*.js'
+    include 'rc/**/*.svg'
+    include 'rc/**/*.png'
+    include 'rc/**/*.jpg'
     exclude 'rc/**/*.built.js'
     include 'rc/**/*.css'
     include 'rc/**/*.htm'
