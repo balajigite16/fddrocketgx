@@ -14,6 +14,7 @@ import javax.baja.nre.annotations.NiagaraProperty;
 import javax.baja.nre.annotations.NiagaraType;
 import javax.baja.sys.*;
 import javax.baja.util.Lexicon;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -299,8 +300,16 @@ public class BFDDService extends BAbstractService {
                     obj.put(status);
                     obj.put(assetName);
                     obj.put(faultName);
-                    obj.put( start.toLocalTime().toString());
-                    obj.put( end == null? "-" : end.toLocalTime().toString());
+
+                    SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yy, hh:mm");
+                    String strDate= formatter.format(start.getMillis());
+                    String strEdDate = "-";
+                    if(end !=null){
+                        strEdDate= formatter.format(end.getMillis());
+                    }
+
+                    obj.put( strDate);
+                    obj.put( end == null? "-" : strEdDate);
                     obj.put( duration);
                     obj.put( "-");
                     obj.put( energy + " KWh");

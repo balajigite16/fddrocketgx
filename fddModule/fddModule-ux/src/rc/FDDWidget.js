@@ -165,12 +165,30 @@ define(['baja!',
                         { title: "CO2 EMISSION" }
                 ],
                 "createdRow": function(row, data, dataIndex) {
+
+                    $(row)[0].children[0].style.padding = "0.8em";
+                    $(row)[0].children[1].style.padding = "0.8em";
+                    $(row)[0].children[2].style.padding = "0.8em";
+                    $(row)[0].children[3].style.padding = "0.8em";
+                    $(row)[0].children[4].style.padding = "0.8em";
+                    $(row)[0].children[5].style.padding = "0.8em";
+                    $(row)[0].children[6].style.padding = "0.8em";
+                    $(row)[0].children[7].style.padding = "0.8em";
+                    $(row)[0].children[8].style.padding = "0.8em";
+
+                    $(row)[0].children[2].innerHTML = $(row)[0].children[2].innerHTML + "<span class='faultsubtext'>Output at 100% for duration longer than expected.<span>"
                     if (data["0"] == true) {
+                      $(row)[0].firstChild.style.textAlign = "center";
                       $(row)[0].firstChild.innerHTML = "<img class=”iconcellsvg” src='/module/fddModule/rc/img/Alarm.svg'/>"
                       $(row).addClass("warning");
+
                     }else{
+                       $(row)[0].firstChild.style.textAlign = "center";
                        $(row)[0].firstChild.innerHTML = "<img class=”iconcellsvg” src='/module/fddModule/rc/img/Off.svg'/>"
                     }
+
+                    //if (data["2"] == true) {
+                    //}
                   },
                 //responsive: true
              });
