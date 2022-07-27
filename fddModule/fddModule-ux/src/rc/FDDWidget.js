@@ -176,7 +176,13 @@ define(['baja!',
                     $(row)[0].children[7].style.padding = "0.8em";
                     $(row)[0].children[8].style.padding = "0.8em";
 
-                    $(row)[0].children[2].innerHTML = $(row)[0].children[2].innerHTML + "<span class='faultsubtext'>Output at 100% for duration longer than expected.<span>"
+
+                    var subText = objDescription[$(row)[0].children[2].innerHTML.toUpperCase()]
+                    if (typeof subText === "undefined") {
+                        subText = "NA"
+                    }
+
+                    $(row)[0].children[2].innerHTML = $(row)[0].children[2].innerHTML + "<span class='faultsubtext'>" + subText+ ".<span>"
                     if (data["0"] == true) {
                       $(row)[0].firstChild.style.textAlign = "center";
                       $(row)[0].firstChild.innerHTML = "<img class=”iconcellsvg” src='/module/fddModule/rc/img/Alarm.svg'/>"
@@ -203,6 +209,43 @@ define(['baja!',
                 var jsonObj = JSON.parse(result.get("data"))
                 render(jsonObj, that.jq())
            });
+        };
+
+        const objDescription = {"CALCULATED SETPOINT ERROR":"VT flow temperature is greater than OAT by a value of the calculated setpoint (when OAT hold off is active)."
+        , "COOLING PLANT NOT REQUIRED":"Cooling not required as OAT/water temperature is below agreed upon levels."
+        , "COOLING VALVE LOSS OF CONTROL":"Output at 100% for duration longer than expected."
+        ,"COOLING VALVE PASSING":"While valve is off, supply temperature is outside of agreed upon levels."
+        ,"EXCESS SPEED":"Fan inconsistent with static pressure."
+        ,"EXCESSIVE OCCUPIED HOURS":"Building occupied outside of intended occupation times."
+        ,"FAN SPEED LOSS OF CONTROL":"Output at 100% for duration longer than expected."
+        ,"FANS LOSS OF CONTROL":"Output at 100% for duration longer than expected."
+        ,"FCU IN OVERRIDE":"FCU Running when not enabled."
+        ,"HEATING PLANT NOT REQUIRED":"Heating in operation when OAT or average space temperature is above agreed upon levels."
+        ,"HEATING VALVE LOSS OF CONTROL":"Output at 100% for duration longer than expected."
+        ,"HEATING VALVE PASSING":"While valve is off, supply temperature is outside of agreed upon levels."
+        ,"HIGH FLOW TEMPERATURE":"Flow temperature above agreed upon levels."
+        ,"HIGH USAGE":"Outut exceeds predetermind benchmark."
+        ,"ISOLATION VALVE FAILURE":"Flow temperature as specified level when valve is closed."
+        ,"LOSS OF CONTROL":"Output at 100% for duration longer than expected."
+        ,"OCCUPIED SETPOINT ERROR":"Temperature is above or below agreed upon levels while occupied."
+        ,"OFF HOURS OPERATION":"Running when occupied."
+        ,"OVER PRESSURE":"Pressure above agreed upon levels."
+        ,"OVER TEMPERATURE":"Temperature above agreed upon levels."
+        ,"OVERCOOLING":"Cooling enabled when setpoint has already been reached."
+        ,"OVERHEATING":"Heating enabled when setpoint has already been reached."
+        ,"PLANT IN HAND":"Plant running when not enabled."
+        ,"PLANT IN OVERRIDE":"Control valve operating when not enabled."
+        ,"PUMP NOT REQUIRED":"Running when there is no demand."
+        ,"REDUCED DEADBAND":"Deadband fallen below agreed upon levels."
+        ,"SETPOINT ERROR":"Setpoint outside of agreed upon levels."
+        ,"SIMULTANEOUS HEATING AND COOLING":"Both cooling and heating in operation (unless de-humidifying)."
+        ,"SOFTWARE ERROR":"Hunting or not achieving setpoint."
+        ,"SPRAY PUMP LOSS OF CONTROL":"Output at 100% for duration longer than expected."
+        ,"SUSPECTED LEAK":"Leak alarm or unit running excessively."
+        ,"UNDER PRESSURE":"Pressure below agreed upon levels."
+        ,"UNOCCUPIED SETPOINT ERROR":"Temperature is above or below agreed upon levels while unoccupied."
+        ,"VALVE FAILURE":"Tank temperature is above setpoint when valve is closed."
+        ,"OFF TEST": "Tank temperature is above setpoint when valve is closed."
         };
 
     return FDDWidget;
